@@ -2,10 +2,14 @@ import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
 // Updated to latest stable version for 2026
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  // apiVersion: '2025-01-27.acacia',
+// const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+//   // apiVersion: '2025-01-27.acacia',
+//   apiVersion: '2026-03-25.dahlia',
+// });
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_dummy_key_for_build', {
   apiVersion: '2026-03-25.dahlia',
 });
+
 
 export async function POST(req: Request) {
   try {
