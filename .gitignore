@@ -43,7 +43,7 @@ next-env.d.ts
 # env files
 # .env*.local
 # .env.local
-.env
-.env.development.local
-.env.test.local
-.env.production.local
+# .env
+# .env.development.local
+# .env.test.local
+# .env.production.local
