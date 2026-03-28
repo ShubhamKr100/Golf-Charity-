@@ -1,36 +1,19 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Digital Heroes - Golf Charity Platform
 
-## Getting Started
+A Next.js & Supabase platform where golf performance fuels charitable impact.
 
-First, run the development server:
+## 🚀 Features (PRD Compliant)
+- **Rolling 5 Score Logic:** Only the latest 5 Stableford scores (1-45) are maintained.
+- **Charity Integration:** 10% of every subscription is allocated to the user's chosen charity.
+- **Admin Draw Engine:** Automated prize pool distribution (40/35/25 split).
+- **Hero Dashboard:** Real-time winning audits and performance tracking.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🛠 Tech Stack
+- **Frontend:** Next.js 14 (App Router), Tailwind CSS
+- **Backend:** Supabase (Auth, PostgreSQL, RLS)
+- **Design:** High-impact dark mode (Radix UI inspired)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🚦 Getting Started
+1. Clone the repo.
+2. Add `.env.local` with your Supabase keys.
+3. Run `npm install` and `npm run dev`.
