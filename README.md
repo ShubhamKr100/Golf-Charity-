@@ -1,36 +1,34 @@
- 
+Here is your updated, fully English `README.md` for GitHub. I have organized the citations to appear strictly at the end of each line as requested.
+
+---
+
 # ⛳ Digital Heroes: Golf Charity Platform
 
-[](https://nextjs.org/)
-[](https://supabase.com/)
-[](https://tailwindcss.com/)
-[](https://opensource.org/licenses/MIT)
+**Digital Heroes** is a premium subscription-based web application that combines golf performance tracking, monthly prize draws, and charitable giving into a single ecosystem[cite: 7, 11]. The platform transforms a golfer's performance into real-world impact[cite: 12, 120].
 
-[cite_start]**Digital Heroes** ek premium subscription-based web application hai jo golf performance tracking, monthly prize draws, aur charitable giving ko ek unique ecosystem mein jodta hai[cite: 7, 11]. [cite_start]Yeh platform golfer ki performance ko real-world impact mein badalta hai[cite: 12, 120].
-
------
+---
 
 ## 🚀 Core Features (PRD Compliant)
 
 ### 🏌️ Performance Score Engine
 
-  * [cite_start]**Rolling 5 System:** Platform har user ke sirf **latest 5 Stableford scores** ko maintain karta hai[cite: 44, 48].
-  * [cite_start]**Automatic Rotation:** Naya score add hote hi, sabse purana score automatically remove ho jata hai[cite: 49].
-  * [cite_start]**Strict Validation:** Sirf **1–45 range** ke scores accept kiye jaate hain[cite: 45].
+* **Rolling 5 System:** The platform maintains only the latest 5 Stableford scores for each user[cite: 44, 48].
+* **Automatic Rotation:** A new score entry automatically replaces the oldest stored score[cite: 49].
+* **Strict Validation:** Only scores within the 1–45 range (Stableford format) are accepted[cite: 45].
 
 ### 🎗️ Charity & Impact System
 
-  * [cite_start]**Guaranteed Contribution:** Har subscription ka **minimum 10%** user ki selected charity ko donate kiya jata hai[cite: 77].
-  * [cite_start]**Flexible Control:** Users dashboard se apna donation percentage badha sakte hain[cite: 78].
-  * [cite_start]**Charity Profiles:** Har charity ka dedicated page hai jisme unke details aur upcoming golf events listed hain[cite: 82].
+* **Guaranteed Contribution:** A minimum of 10% of every subscription is donated to the user’s selected charity[cite: 77].
+* **Flexible Control:** Users can voluntarily increase their donation percentage directly from the dashboard[cite: 78].
+* **Charity Profiles:** Each charity has a dedicated page featuring descriptions and upcoming golf events[cite: 82].
 
 ### 🏆 Admin Draw & Reward Engine
 
-  * [cite_start]**Tiered Payouts:** Prize pool distribution logic: **5-Match (40%)**, **4-Match (35%)**, aur **3-Match (25%)**[cite: 70].
-  * [cite_start]**Workflow Tracking:** Winners ek transparent process se guzarte hain: **Pending → Verified → Paid**[cite: 85].
-  * [cite_start]**Admin Control:** Admins draws manage karte hain aur payouts ko verify karte hain[cite: 36, 38].
+* **Tiered Payouts:** Prize pool distribution follows a 40% (5-Match), 35% (4-Match), and 25% (3-Match) logic[cite: 70].
+* **Workflow Tracking:** Winners move through a transparent verification process: Pending → Verified → Paid[cite: 85].
+* **Admin Control:** Administrators manage draws and verify payout submissions[cite: 36, 38].
 
------
+---
 
 ## 🛠 Tech Stack
 
@@ -41,3 +39,7 @@
 | **Database** | Supabase (PostgreSQL) |
 | **Auth** | Supabase Auth (JWT + Middleware) |
 | **Deployment** | Vercel |
+
+---
+
+ 
