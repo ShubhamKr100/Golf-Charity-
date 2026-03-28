@@ -69,24 +69,49 @@ export default function AdminPanel() {
         const { data: nDraw } = await supabase.from('draws').insert({ status: 'open' }).select().single();
         draw = nDraw;
       }
+        // Is block ko replace karein (jahan loop ke andar insert ho raha hai)
+for (const u of activeUsers) {
+  const { data: scs } = await supabase.from('golf_scores').select('score').eq('user_id', u.id).limit(5);
+  if (!scs?.length) continue;
 
-      for (const u of activeUsers) {
-        const { data: scs } = await supabase.from('golf_scores').select('score').eq('user_id', u.id).limit(5);
-        if (!scs?.length) continue;
+  const avg = scs.reduce((acc, curr) => acc + curr.score, 0) / scs.length;
+  const res = calculatePrdPayout(avg);
 
-        const avg = scs.reduce((acc, curr) => acc + curr.score, 0) / scs.length;
-        const res = calculatePrdPayout(avg);
+  // ✅ FIX: Added null check for 'draw' and proper object structure
+  if (res.money > 0 && draw) {
+    await supabase.from('winners').insert({
+      user_id: u.id,
+      draw_id: draw.id, 
+      prize_amount: res.money,
+      match_tier: res.tier,
+      status: 'Pending'
+    });
+  }
+}
+//       for (const u of activeUsers) {
+//         const { data: scs } = await supabase.from('golf_scores').select('score').eq('user_id', u.id).limit(5);
+//         if (!scs?.length) continue;
 
-        if (res.money > 0) {
-          await supabase.from('winners').insert({
-            user_id: u.id,
-            draw_id: draw.id,
-            prize_amount: res.money,
-            match_tier: res.tier,
-            status: 'Pending'
-          });
-        }
-      }
+//         const avg = scs.reduce((acc, curr) => acc + curr.score, 0) / scs.length;
+//         const res = calculatePrdPayout(avg);
+
+//         if (res.money > 0) {
+//           await supabase.from('winners').insert({
+//             user_id: u.id,
+//             // draw_id: draw.id,
+//             if (!draw) return alert("Error: Draw could not be initialized.");
+
+// // await supabase.from('winners').insert({
+//   // user_id: u.id,
+//   draw_id: draw.id, // Ab TypeScript error nahi dega
+   
+
+//             prize_amount: res.money,
+//             match_tier: res.tier,
+//             status: 'Pending'
+//           });
+//         }
+//       }
       await supabase.from('draws').update({ status: 'completed' }).eq('id', draw.id);
       alert("✅ Draw Completed based on Performance!");
       fetchAdminData();
