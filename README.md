@@ -16,4 +16,4 @@ A Next.js & Supabase platform where golf performance fuels charitable impact.
 ## 🚦 Getting Started
 1. Clone the repo.
 2. Add `.env.local` with your Supabase keys.
-3. Run `npm install` and `npm run dev`.
+3. Run `npm install` and `npm run dev`."# Golf-Charity-" 
