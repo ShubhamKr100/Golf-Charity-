@@ -1,4 +1,5 @@
 'use client';
+import { loadStripe } from '@stripe/stripe-js';
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
@@ -29,6 +30,51 @@ export default function Dashboard() {
     }
   };
 
+  // const handleSubscribe = async () => {
+  //   try {
+  //     const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+
+  //     const res = await fetch('/api/checkout', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({ userId: profile.id, email: profile.email }),
+  //     });
+
+  //     const data = await res.json();
+  //     if (data.error) throw new Error(data.error);
+
+  //     // Stripe checkout page par redirect karega
+  //     await stripe?.redirectToCheckout({ sessionId: data.sessionId });
+  //   } catch (err: any) {
+  //     alert("Payment Error: " + err.message);
+  //   }
+  // };
+  const handleSubscribe = async () => {
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: profile.id, email: profile.email }),
+      });
+
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+
+      // NAYA TARIKA: Direct URL par bhej dein
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error("Stripe URL not found");
+      }
+
+    } catch (err: any) {
+      alert("Payment Error: " + err.message);
+    }
+  };
+
+  /////////////
+
+
   const fetchData = async () => {
     const { data: { user } } = await supabase.auth.getUser();
 
@@ -36,6 +82,22 @@ export default function Dashboard() {
       router.push('/signup');
       return;
     }
+
+    // --- 🚀 NEW: STRIPE SUCCESS HANDLING ---
+    const urlParams = new URLSearchParams(window.location.search);
+    const sessionId = urlParams.get('session_id');
+
+    if (sessionId) {
+      // 1. Database mein status update karein
+      await supabase
+        .from('profiles')
+        .update({ subscription_status: 'active' })
+        .eq('id', user.id);
+
+      // 2. URL ko clean karein (session_id hata dein taaki refresh par baar-baar update na ho)
+      window.history.replaceState({}, document.title, "/dashboard");
+    }
+    // ---------------------------------------
 
     try {
       const [prof, sco, drw, win] = await Promise.all([
@@ -56,12 +118,44 @@ export default function Dashboard() {
     }
   };
 
+  // ////////////////////////////
+
+  // const fetchData = async () => {
+  //   const { data: { user } } = await supabase.auth.getUser();
+
+  //   if (!user) {
+  //     router.push('/signup');
+  //     return;
+  //   }
+
+  //   try {
+  //     const [prof, sco, drw, win] = await Promise.all([
+  //       supabase.from('profiles').select('*, charities(name)').eq('id', user.id).single(),
+  //       supabase.from('golf_scores').select('*').eq('user_id', user.id).order('recorded_at', { ascending: false }).limit(5),
+  //       supabase.from('draws').select('*').filter('status', 'eq', 'open').limit(2),
+  //       supabase.from('winners').select('*, draws(draw_date)').eq('user_id', user.id)
+  //     ]);
+
+  //     setProfile(prof.data);
+  //     setScores(sco.data || []);
+  //     setUpcomingDraws(drw.data || []);
+  //     setWinnings(win.data || []);
+  //   } catch (err) {
+  //     console.error("Data fetch error:", err);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
   useEffect(() => {
     fetchData();
   }, [router]);
 
   const handleAddScore = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (profile?.subscription_status !== 'active') { ///////////////////////
+      return alert("Subscription Required: Please activate a plan to log scores.");
+    }
     const scoreVal = parseInt(newScore);
 
     if (scoreVal < 1 || scoreVal > 45) return alert("Score must be between 1 and 45");
@@ -102,11 +196,11 @@ export default function Dashboard() {
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100 p-4 md:p-10 font-sans selection:bg-emerald-500/30">
       <div className="max-w-6xl mx-auto space-y-10 animate-in fade-in duration-1000">
-        
+
         {/* --- HEADER SECTION --- */}
         <header className="bg-zinc-900/40 p-10 rounded-[3rem] border border-zinc-800 backdrop-blur-xl flex flex-col md:flex-row justify-between items-center gap-8 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 blur-3xl -z-10"></div>
-          
+
           <div className="text-center md:text-left space-y-2">
             <h1 className="text-4xl font-black uppercase tracking-tighter italic leading-none">
               Hero: <span className="text-emerald-500">{profile?.full_name || 'Golfer'}</span>
@@ -115,16 +209,55 @@ export default function Dashboard() {
               Impact Partner: {profile?.charities?.name || 'Pending Selection'}
             </p>
           </div>
-
+          {/* 
           <div className="flex items-center gap-4">
             <div className={`px-6 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest border transition-all ${profile?.subscription_status === 'active' ? 'border-emerald-500/30 text-emerald-400 bg-emerald-500/5' : 'border-red-500/30 text-red-400 bg-red-500/5 animate-pulse'}`}>
               Plan: {profile?.subscription_status || 'Inactive'}
+
+  
+              {profile?.subscription_status !== 'active' && (
+                <button
+                  onClick={handleSubscribe}
+                  className="mt-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all"
+                >
+                  Subscribe Now
+                </button>
+              )}
             </div>
           </div>
+ */}
+          <div className="flex flex-col md:flex-row items-center gap-4">
+            {/* Status Badge */}
+            <div className={`px-6 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest border transition-all ${profile?.subscription_status === 'active' ? 'border-emerald-500/30 text-emerald-400 bg-emerald-500/5' : 'border-red-500/30 text-red-400 bg-red-500/5 animate-pulse'}`}>
+              Plan: {profile?.subscription_status || 'Inactive'}
+            </div>
+
+            {/* ✅ Action Button: Inactive hone par hi dikhega aur badge ke side mein aayega */}
+            {profile?.subscription_status !== 'active' && (
+              // <button
+              // onClick={handleSubscribe}
+              //   className="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-lg shadow-emerald-900/20 active:scale-95 border border-emerald-500/50"
+              // >
+              //   Activate Hero Plan 
+              // </button>
+
+              // src/app/dashboard/page.tsx
+              <button
+                onClick={() => router.push('/subscribe')} // ✅ Redirect to subscribe page
+                className="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all"
+              >
+                Activate Hero Plan
+              </button>
+            )}
+          </div>
+
+
+
+
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          
+
           {/* --- LEFT COLUMN: WINNINGS & IMPACT --- */}
           <div className="space-y-10">
             {/* Winnings Overview  */}
@@ -155,9 +288,9 @@ export default function Dashboard() {
                   {profile?.charity_percentage || 10}%
                 </span>
               </div>
-              
+
               <div className="space-y-4">
-                <input 
+                <input
                   type="range" min="10" max="100" step="5"
                   value={profile?.charity_percentage || 10}
                   onChange={(e) => updateCharityPercentage(parseInt(e.target.value))}
@@ -168,7 +301,7 @@ export default function Dashboard() {
                   <span>100% (Pure Hero)</span>
                 </div>
                 <p className="text-[9px] text-zinc-500 font-bold uppercase text-center leading-relaxed">
-                  Voluntarily increase your contribution above. 
+                  Voluntarily increase your contribution above.
                 </p>
               </div>
             </section>
@@ -183,21 +316,21 @@ export default function Dashboard() {
                   <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-[0.2em]">Latest Stableford Score (1-45)</p>
                 </div>
                 <div className="px-4 py-1.5 bg-zinc-950 border border-zinc-800 rounded-full text-[9px] font-black text-emerald-500 tracking-[0.2em] uppercase">
-                    Rolling 5 Active
+                  Rolling 5 Active
                 </div>
               </div>
 
               {/* Form Input */}
               <form onSubmit={handleAddScore} className="flex flex-col sm:flex-row gap-4 relative z-10">
-                <input 
-                  type="number" 
-                  value={newScore} 
+                <input
+                  type="number"
+                  value={newScore}
                   onChange={(e) => setNewScore(e.target.value)}
-                  placeholder="Round Score" 
+                  placeholder="Round Score"
                   className="flex-1 bg-zinc-950/80 border border-zinc-800 rounded-[2rem] p-6 outline-none focus:ring-2 focus:ring-emerald-500/20 font-black text-2xl text-emerald-500 transition-all placeholder:text-zinc-800"
                   required
                 />
-                <button 
+                <button
                   disabled={isUpdating}
                   className="bg-emerald-600 hover:bg-emerald-500 text-white px-12 py-6 rounded-[2rem] font-black uppercase tracking-[0.2em] transition-all disabled:opacity-30 active:scale-95"
                 >
@@ -219,7 +352,7 @@ export default function Dashboard() {
                       </div>
                       {index === 0 && (
                         <div className="absolute -bottom-6 left-0 w-full text-center">
-                            <span className="text-[9px] font-black text-emerald-500 uppercase tracking-widest bg-emerald-500/5 px-2 py-0.5 rounded-full border border-emerald-500/10 italic">Latest</span>
+                          <span className="text-[9px] font-black text-emerald-500 uppercase tracking-widest bg-emerald-500/5 px-2 py-0.5 rounded-full border border-emerald-500/10 italic">Latest</span>
                         </div>
                       )}
                     </div>
@@ -233,9 +366,9 @@ export default function Dashboard() {
 
               {/* Tip box */}
               <div className="p-6 bg-zinc-950/30 rounded-3xl border border-zinc-800/50">
-                  <p className="text-[11px] text-zinc-500 leading-relaxed font-medium">
-                    PRD LOGIC: Our system maintains only your last 5 Rounds. Entering a new score will automatically replace the oldest round to keep your performance profile current. 
-                  </p>
+                <p className="text-[11px] text-zinc-500 leading-relaxed font-medium">
+                  PRD LOGIC: Our system maintains only your last 5 Rounds. Entering a new score will automatically replace the oldest round to keep your performance profile current.
+                </p>
               </div>
             </section>
           </div>

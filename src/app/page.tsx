@@ -1,5 +1,93 @@
+// import Link from 'next/link';
+
+// // --- Stylized Logo Component ---
+// const Logo = () => (
+//   <div className="flex items-center gap-2 group cursor-pointer">
+//     <div className="relative w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.4)] group-hover:scale-110 transition-transform">
+//       <span className="text-zinc-950 font-black text-xl italic mt-0.5 ml-0.5">G</span>
+//       <div className="absolute -right-1 -bottom-1 w-5 h-5 bg-white rounded-full flex items-center justify-center border-2 border-zinc-950">
+//         <span className="text-zinc-950 font-black text-[10px]">4</span>
+//       </div>
+//     </div>
+//     <span className="text-xl font-black tracking-tighter uppercase italic text-white">
+//       Golf <span className="text-emerald-500 underline decoration-2 underline-offset-4">4</span> Charity
+//     </span>
+//   </div>
+// );
+
+// export default function Home() {
+//   return (
+//     <main className="min-h-screen bg-zinc-950 text-white selection:bg-emerald-500/30 overflow-hidden relative">
+      
+//       {/* Background Glows */}
+//       <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-emerald-500/10 blur-[150px] rounded-full -z-10"></div>
+//       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-emerald-600/5 blur-[120px] rounded-full -z-10"></div>
+
+//       {/* --- NAVBAR --- */}
+//       <nav className="max-w-7xl mx-auto px-6 py-8 flex justify-between items-center relative z-20">
+//         <Logo />
+//         <div className="hidden md:flex items-center gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">
+//           <Link href="/charities" className="hover:text-emerald-500 transition-colors">Causes</Link>
+//           <Link href="/how-it-works" className="hover:text-emerald-500 transition-colors">How it works</Link>
+//           <Link href="/signup" className="bg-white text-zinc-950 px-6 py-2.5 rounded-full hover:bg-emerald-500 transition-all shadow-lg">Join Mission</Link>
+//         </div>
+//       </nav>
+
+//       {/* --- HERO SECTION --- */}
+//       <section className="max-w-7xl mx-auto px-6 pt-20 pb-32 flex flex-col items-center text-center relative z-10">
+        
+//         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-8 animate-bounce">
+//           <span className="w-2 h-2 bg-emerald-500 rounded-full"></span>
+//           <span className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-500">The Future of Golf Philanthropy</span>
+//         </div>
+
+//         <h1 className="text-6xl md:text-9xl font-black italic tracking-tighter uppercase leading-[0.85] mb-8">
+//           Golf for <span className="text-transparent bg-clip-text bg-gradient-to-b from-emerald-400 to-emerald-700">Glory.</span><br />
+//           Golf for <span className="text-white underline decoration-emerald-500/50">Good.</span>
+//         </h1>
+
+//         <p className="max-w-2xl text-zinc-400 text-lg md:text-xl font-medium leading-relaxed mb-12">
+//           The modern platform where your performance on the green fuels global change. Track scores, support causes, and win life-changing prizes.
+//         </p>
+
+//         <div className="flex flex-col sm:flex-row gap-6">
+//           <Link href="/signup" className="px-12 py-6 bg-emerald-600 hover:bg-emerald-500 rounded-2xl font-black uppercase tracking-[0.2em] italic transition-all shadow-[0_20px_40px_rgba(16,185,129,0.25)] active:scale-95 text-center">
+//             Join the Mission
+//           </Link>
+//           <Link href="/charities" className="px-12 py-6 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-2xl font-black uppercase tracking-[0.2em] italic transition-all active:scale-95 text-center">
+//             View Impact Causes
+//           </Link>
+//         </div>
+
+//         {/* --- STATS SECTION --- */}
+//         <div className="mt-24 grid grid-cols-2 md:grid-cols-3 gap-12 border-t border-zinc-900 pt-16 w-full">
+//           <div>
+//             <p className="text-4xl font-black text-white italic mb-1">10%</p>
+//             <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Guaranteed Impact</p>
+//           </div>
+//           <div>
+//             <p className="text-4xl font-black text-white italic mb-1">£2.5k+</p>
+//             <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Monthly Prize Pool</p>
+//           </div>
+//           <div className="col-span-2 md:col-span-1">
+//             <p className="text-4xl font-black text-emerald-500 italic mb-1">50+</p>
+//             <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Active Charities</p>
+//           </div>
+//         </div>
+//       </section>
+
+//       {/* Decorative Golf Ball Image or Icon at bottom */}
+//       <div className="absolute bottom-[-100px] left-1/2 -translate-x-1/2 opacity-20 blur-sm pointer-events-none">
+//         <div className="w-[400px] h-[400px] border-[40px] border-zinc-900 rounded-full"></div>
+//       </div>
+//     </main>
+//   );
+// }
+
+
 'use client';
 import Link from 'next/link';
+
 
 export default function Home() {
   return (
@@ -75,122 +163,4 @@ export default function Home() {
     </main>
   );
 }
-// // import Image from "next/image";
-
-// // export default function Home() {
-// //   return (
-// //     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-// //       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-// //         <Image
-// //           className="dark:invert"
-// //           src="/next.svg"
-// //           alt="Next.js logo"
-// //           width={100}
-// //           height={20}
-// //           priority
-// //         />
-// //         <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-// //           <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-// //             To get started, edit the page.tsx file.
-// //           </h1>
-// //           <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-// //             Looking for a starting point or more instructions? Head over to{" "}
-// //             <a
-// //               href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-// //               className="font-medium text-zinc-950 dark:text-zinc-50"
-// //             >
-// //               Templates
-// //             </a>{" "}
-// //             or the{" "}
-// //             <a
-// //               href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-// //               className="font-medium text-zinc-950 dark:text-zinc-50"
-// //             >
-// //               Learning
-// //             </a>{" "}
-// //             center.
-// //           </p>
-// //         </div>
-// //         <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-// //           <a
-// //             className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-// //             href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-// //             target="_blank"
-// //             rel="noopener noreferrer"
-// //           >
-// //             <Image
-// //               className="dark:invert"
-// //               src="/vercel.svg"
-// //               alt="Vercel logomark"
-// //               width={16}
-// //               height={16}
-// //             />
-// //             Deploy Now
-// //           </a>
-// //           <a
-// //             className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-// //             href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-// //             target="_blank"
-// //             rel="noopener noreferrer"
-// //           >
-// //             Documentation
-// //           </a>
-// //         </div>
-// //       </main>
-// //     </div>
-// //   );
-// // }
-
-
-// import Link from 'next/link';
-
-// export default function Home() {
-//   return (
-//     <main className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col items-center justify-center p-6 text-center">
-//       {/* Background decoration - Avoiding Golf Clichés */}
-//       <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 opacity-20">
-//         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-emerald-500 blur-[120px] rounded-full"></div>
-//         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-600 blur-[120px] rounded-full"></div>
-//       </div>
-
-//       {/* Hero Section */}
-//       <section className="max-w-4xl space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
-//         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight">
-//           Play for <span className="text-emerald-500">Purpose.</span> <br />
-//           Win for <span className="text-blue-500">Impact.</span>
-//         </h1>
-        
-//         <p className="text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-//           The modern platform where your golf performance fuels global change. 
-//           Track your scores, support your favorite charity, and enter monthly 
-//           prizes that change lives—starting with yours.
-//         </p>
-
-//         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-//           <Link href="/signup" className="px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-full font-bold text-lg transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(16,185,129,0.4)]">
-//             Start Impacting Today
-//           </Link>
-//           <Link href="/about" className="px-8 py-4 bg-transparent border border-zinc-700 hover:bg-zinc-900 rounded-full font-semibold text-lg transition-all">
-//             How the Draw Works
-//           </Link>
-//         </div>
-//       </section>
-
-//       {/* Stats/Features Section */}
-//       <section className="mt-24 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl w-full">
-//         <div className="p-8 rounded-3xl bg-zinc-900/50 border border-zinc-800 backdrop-blur-sm">
-//           <h3 className="text-2xl font-bold mb-2">10% Guaranteed</h3>
-//           <p className="text-zinc-400">Every subscription directly supports a charity you choose personally.</p>
-//         </div>
-//         <div className="p-8 rounded-3xl bg-zinc-900/50 border border-zinc-800 backdrop-blur-sm">
-//           <h3 className="text-2xl font-bold mb-2">Rolling Performance</h3>
-//           <p className="text-zinc-400">Enter your latest 5 Stableford scores. Simple. Fast. Emotional.</p>
-//         </div>
-//         <div className="p-8 rounded-3xl bg-zinc-900/50 border border-zinc-800 backdrop-blur-sm">
-//           <h3 className="text-2xl font-bold mb-2">Monthly Jackpots</h3>
-//           <p className="text-zinc-400">Match 5 numbers to win. No winner? The pool rolls over to next month.</p>
-//         </div>
-//       </section>
-//     </main>
-//   );
-// }
+ 
